@@ -59,17 +59,32 @@
         <p>1. Which activity sounds most interesting to you?</p>
         <label><input type="radio" name="q1" value="psych"> Understanding how people think</label><br>
         <label><input type="radio" name="q1" value="cs"> Solving logic puzzles or coding</label><br>
-        <label><input type="radio" name="q1" value="biz"> Starting your own company</label><br><br>
+        <label><input type="radio" name="q1" value="biz"> Starting your own company</label><br>
+        <label><input type="radio" name="q1" value="edu"> Helping kids learn and grow</label><br>
+        <label><input type="radio" name="q1" value="env"> Studying ecosystems and nature</label><br>
+        <label><input type="radio" name="q1" value="art"> Creating visual or performing art</label><br><br>
 
         <p>2. What's your favorite type of school project?</p>
         <label><input type="radio" name="q2" value="psych"> Group discussions and presentations</label><br>
         <label><input type="radio" name="q2" value="cs"> Building or designing things</label><br>
-        <label><input type="radio" name="q2" value="biz"> Analyzing markets or creating ads</label><br><br>
+        <label><input type="radio" name="q2" value="biz"> Analyzing markets or creating ads</label><br>
+        <label><input type="radio" name="q2" value="art"> Making posters, videos, or music</label><br><br>
 
         <p>3. What do you value most in a future career?</p>
         <label><input type="radio" name="q3" value="psych"> Helping people grow and thrive</label><br>
         <label><input type="radio" name="q3" value="cs"> Innovation and problem-solving</label><br>
-        <label><input type="radio" name="q3" value="biz"> Leadership and financial success</label><br><br>
+        <label><input type="radio" name="q3" value="biz"> Leadership and financial success</label><br>
+        <label><input type="radio" name="q3" value="env"> Making a positive impact on the environment</label><br><br>
+
+        <p>4. How do you feel about working with kids or in schools?</p>
+        <label><input type="radio" name="q4" value="edu"> I’d love that!</label><br>
+        <label><input type="radio" name="q4" value="psych"> I like understanding youth behavior</label><br>
+        <label><input type="radio" name="q4" value="biz"> I’d rather be in a corporate setting</label><br><br>
+
+        <p>5. Do you enjoy spending time outdoors or learning about nature?</p>
+        <label><input type="radio" name="q5" value="env"> Yes, I love the outdoors</label><br>
+        <label><input type="radio" name="q5" value="cs"> I prefer indoor/tech-based work</label><br>
+        <label><input type="radio" name="q5" value="art"> Nature inspires my creativity</label><br><br>
 
         <button type="button" onclick="getResults()">Submit</button>
       </form>
@@ -80,12 +95,13 @@
   <section id="majors">
     <div class="card">
       <h2>Explore Majors</h2>
-      <p>Learn about different majors and what they focus on.</p>
       <ul>
-        <li><strong>Psychology:</strong> Study of behavior and mind.</li>
-        <li><strong>Computer Science:</strong> Software, hardware, and systems.</li>
-        <li><strong>Business:</strong> Management, marketing, and finance.</li>
-        <!-- Add more majors here -->
+        <li><strong>Psychology:</strong> Study of behavior and mental processes</li>
+        <li><strong>Computer Science:</strong> Software, hardware, and systems</li>
+        <li><strong>Business:</strong> Management, finance, and marketing</li>
+        <li><strong>Education:</strong> Teaching, child development, school systems</li>
+        <li><strong>Environmental Science:</strong> Nature, sustainability, conservation</li>
+        <li><strong>Art:</strong> Visual design, performance, creative expression</li>
       </ul>
     </div>
   </section>
@@ -93,46 +109,46 @@
   <section id="careers">
     <div class="card">
       <h2>Career Paths</h2>
-      <p>Find out what careers people with different majors often pursue.</p>
       <ul>
-        <li><strong>Psychology:</strong> Counselor, HR, Researcher</li>
-        <li><strong>Computer Science:</strong> Software Developer, Data Analyst</li>
-        <li><strong>Business:</strong> Marketing Manager, Entrepreneur</li>
-        <!-- Add more careers here -->
+        <li><strong>Psychology:</strong> Counselor, social worker, researcher</li>
+        <li><strong>Computer Science:</strong> Developer, data analyst, AI engineer</li>
+        <li><strong>Business:</strong> Entrepreneur, consultant, project manager</li>
+        <li><strong>Education:</strong> Teacher, school counselor, principal</li>
+        <li><strong>Environmental Science:</strong> Ecologist, park ranger, sustainability analyst</li>
+        <li><strong>Art:</strong> Designer, illustrator, performer, animator</li>
       </ul>
     </div>
   </section>
 
   <script>
     function getResults() {
-      const answers = ['q1', 'q2', 'q3'].map(q => {
-        const checked = document.querySelector(`input[name="${q}"]:checked`);
-        return checked ? checked.value : null;
-      });
+      const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
+      const count = { psych: 0, cs: 0, biz: 0, edu: 0, env: 0, art: 0 };
 
-      if (answers.includes(null)) {
-        document.getElementById("result").innerText = "Please answer all questions!";
-        return;
+      for (let q of questions) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected) {
+          count[selected.value]++;
+        } else {
+          document.getElementById("result").innerText = "Please answer all questions!";
+          return;
+        }
       }
 
-      const count = { psych: 0, cs: 0, biz: 0 };
-      answers.forEach(answer => count[answer]++);
+      const bestMatch = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
 
-      const result = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
+      const messages = {
+        psych: "You might enjoy majoring in Psychology! Perfect for those curious about people and how we think.",
+        cs: "You might enjoy Computer Science! Great for problem-solvers and tech lovers.",
+        biz: "You might enjoy Business! It’s ideal for natural leaders and innovators.",
+        edu: "You might enjoy Education! You’d be great helping others learn and grow.",
+        env: "You might enjoy Environmental Science! Perfect if you care about the planet and love nature.",
+        art: "You might enjoy Art! A creative field for expressive and imaginative thinkers."
+      };
 
-      let message = '';
-      if (result === 'psych') {
-        message = "You might enjoy majoring in Psychology! It's great for those curious about people and behavior.";
-      } else if (result === 'cs') {
-        message = "You might enjoy Computer Science! A great fit for problem solvers and tech enthusiasts.";
-      } else if (result === 'biz') {
-        message = "You might enjoy Business! It’s a versatile major for future leaders and entrepreneurs.";
-      }
-
-      document.getElementById("result").innerText = message;
+      document.getElementById("result").innerText = messages[bestMatch];
     }
   </script>
 
 </body>
 </html>
-
