@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your College Major</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f2f5;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #0055a5;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+    section {
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Find Your College Major</h1>
+    <p>Helping you discover the right path for your future</p>
+  </header>
+
+  <nav>
+    <a href="#quiz">Quiz</a>
+    <a href="#majors">Majors</a>
+    <a href="#careers">Careers</a>
+  </nav>
+
+  <section id="quiz">
+    <div class="card">
+      <h2>Take the Quiz</h2>
+      <form id="majorQuiz">
+        <p>1. Which activity sounds most interesting to you?</p>
+        <label><input type="radio" name="q1" value="psych"> Understanding how people think</label><br>
+        <label><input type="radio" name="q1" value="cs"> Solving logic puzzles or coding</label><br>
+        <label><input type="radio" name="q1" value="biz"> Starting your own company</label><br><br>
+
+        <p>2. What's your favorite type of school project?</p>
+        <label><input type="radio" name="q2" value="psych"> Group discussions and presentations</label><br>
+        <label><input type="radio" name="q2" value="cs"> Building or designing things</label><br>
+        <label><input type="radio" name="q2" value="biz"> Analyzing markets or creating ads</label><br><br>
+
+        <p>3. What do you value most in a future career?</p>
+        <label><input type="radio" name="q3" value="psych"> Helping people grow and thrive</label><br>
+        <label><input type="radio" name="q3" value="cs"> Innovation and problem-solving</label><br>
+        <label><input type="radio" name="q3" value="biz"> Leadership and financial success</label><br><br>
+
+        <button type="button" onclick="getResults()">Submit</button>
+      </form>
+      <div id="result" style="margin-top: 20px; font-weight: bold;"></div>
+    </div>
+  </section>
+
+  <section id="majors">
+    <div class="card">
+      <h2>Explore Majors</h2>
+      <p>Learn about different majors and what they focus on.</p>
+      <ul>
+        <li><strong>Psychology:</strong> Study of behavior and mind.</li>
+        <li><strong>Computer Science:</strong> Software, hardware, and systems.</li>
+        <li><strong>Business:</strong> Management, marketing, and finance.</li>
+        <!-- Add more majors here -->
+      </ul>
+    </div>
+  </section>
+
+  <section id="careers">
+    <div class="card">
+      <h2>Career Paths</h2>
+      <p>Find out what careers people with different majors often pursue.</p>
+      <ul>
+        <li><strong>Psychology:</strong> Counselor, HR, Researcher</li>
+        <li><strong>Computer Science:</strong> Software Developer, Data Analyst</li>
+        <li><strong>Business:</strong> Marketing Manager, Entrepreneur</li>
+        <!-- Add more careers here -->
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    function getResults() {
+      const answers = ['q1', 'q2', 'q3'].map(q => {
+        const checked = document.querySelector(`input[name="${q}"]:checked`);
+        return checked ? checked.value : null;
+      });
+
+      if (answers.includes(null)) {
+        document.getElementById("result").innerText = "Please answer all questions!";
+        return;
+      }
+
+      const count = { psych: 0, cs: 0, biz: 0 };
+      answers.forEach(answer => count[answer]++);
+
+      const result = Object.keys(count).reduce((a, b) => count[a] > count[b] ? a : b);
+
+      let message = '';
+      if (result === 'psych') {
+        message = "You might enjoy majoring in Psychology! It's great for those curious about people and behavior.";
+      } else if (result === 'cs') {
+        message = "You might enjoy Computer Science! A great fit for problem solvers and tech enthusiasts.";
+      } else if (result === 'biz') {
+        message = "You might enjoy Business! It’s a versatile major for future leaders and entrepreneurs.";
+      }
+
+      document.getElementById("result").innerText = message;
+    }
+  </script>
+
+</body>
+</html>
+
